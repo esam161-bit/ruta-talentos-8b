@@ -90,7 +90,10 @@ textarea{min-height:90px;resize:vertical}
 <section id="identidad" class="pantalla">
   <div class="tarjeta">
     <h2>Tu identificación</h2>
-    <p class="pista">Escribe tus datos tal como aparecen en la lista de clase.</p>
+    <div class="aviso" style="background:#e8f1ff"><b>¿Qué debo hacer?</b><ol style="margin:6px 0 0 18px;padding:0">
+      <li>Escribe tu nombre y tus apellidos completos, sin apodos.</li>
+      <li>Escribe tu número de lista tal como aparece en la lista de clase (de 1 a 31).</li>
+      <li>Toca <b>Continuar</b>.</li></ol></div>
     <label for="nombre">Nombres</label>
     <input type="text" id="nombre" maxlength="60" autocomplete="off">
     <label for="apellido">Apellidos</label>
@@ -109,6 +112,11 @@ textarea{min-height:90px;resize:vertical}
     <div class="barra"><div id="progreso"></div></div>
     <div class="estaciones"><span>Estación 1</span><span>Estación 2</span><span>Estación 3</span><span>Carné</span></div>
     <p style="margin-top:14px">🧭 <b>Estación 1:</b> Mis evidencias<br>🔀 <b>Estación 2:</b> Cruce de caminos<br>🧩 <b>Estación 3:</b> Caso real<br>🎓 <b>Final:</b> Mi carné</p>
+    <div class="aviso" style="background:#e8f1ff"><b>Reglas de la ruta</b><ol style="margin:6px 0 0 18px;padding:0">
+      <li>No hay respuestas buenas ni malas. Responde con sinceridad.</li>
+      <li><b>No recargues la página</b>: si lo haces, se borra tu avance y debes empezar de nuevo.</li>
+      <li>Si algo falta, aparecerá un mensaje en rojo que te dice qué completar.</li>
+      <li>Cada estación dura unos 10 minutos. Al final descargas tu carné.</li></ol></div>
     <button class="btn" onclick="irA('e1')">Empezar estación 1</button>
   </div>
 </section>
@@ -117,7 +125,10 @@ textarea{min-height:90px;resize:vertical}
 <section id="e1" class="pantalla">
   <div class="tarjeta">
     <h2>🧭 Estación 1: Mis evidencias</h2>
-    <p>Elige <b>dos verbos</b> que describan cómo trabajas mejor. Piensa en lo que has hecho, no en lo que quisieras hacer.</p>
+    <div class="aviso" style="background:#e8f1ff"><b>¿Qué debo hacer?</b><ol style="margin:6px 0 0 18px;padding:0">
+      <li>Toca <b>2 verbos</b> que describan cómo trabajas mejor. Piensa en lo que <b>ya has hecho</b>, no en lo que quisieras hacer.</li>
+      <li>Escribe un ejemplo real de tus cuadernos de las Sesiones 1 a 3. Ejemplo: "Armé la tabla de datos y la corregí sola".</li>
+      <li>Toca <b>Siguiente estación</b>.</li></ol></div>
     <div class="chips" id="verbos"></div>
     <p class="pista" id="contVerbos">Selecciona 2 verbos.</p>
     <label for="evidencia">Escribe un ejemplo real de tus cuadernos (Sesiones 1 a 3)</label>
@@ -132,7 +143,10 @@ textarea{min-height:90px;resize:vertical}
 <section id="e2" class="pantalla">
   <div class="tarjeta">
     <h2>🔀 Estación 2: Cruce de caminos</h2>
-    <p>Marca con <b>Me interesa</b> o <b>No me interesa</b> cada sector. Elige al menos <b>3</b> que te interesen.</p>
+    <div class="aviso" style="background:#e8f1ff"><b>¿Qué debo hacer?</b><ol style="margin:6px 0 0 18px;padding:0">
+      <li>Lee cada sector.</li>
+      <li>Toca <b>Me interesa</b> si te gustaría estudiar o trabajar en ese sector. Toca <b>No</b> si no te interesa.</li>
+      <li>Marca <b>al menos 3</b> con "Me interesa". No necesitas saber cómo se hace; solo lo que te llama la atención.</li></ol></div>
     <div id="sectores"></div>
     <p class="pista" id="contSectores">Interesados: 0</p>
     <p class="error" id="errE2"></p>
@@ -144,7 +158,10 @@ textarea{min-height:90px;resize:vertical}
 <section id="e3" class="pantalla">
   <div class="tarjeta">
     <h2>🧩 Estación 3: Caso real</h2>
-    <p>Para cada situación del salón, elige la estrategia con la que tú la resolverías.</p>
+    <div class="aviso" style="background:#e8f1ff"><b>¿Qué debo hacer?</b><ol style="margin:6px 0 0 18px;padding:0">
+      <li>Lee cada caso.</li>
+      <li>En cada caso, toca <b>una sola opción</b>: la forma en que <b>tú</b> lo resolverías.</li>
+      <li>Responde los tres casos y toca <b>Ver mi resultado</b>.</li></ol></div>
     <div id="casos"></div>
     <p class="error" id="errE3"></p>
     <button class="btn" onclick="validarE3()">Ver mi resultado</button>
@@ -155,7 +172,11 @@ textarea{min-height:90px;resize:vertical}
 <section id="e4" class="pantalla">
   <div class="tarjeta">
     <h2>🎓 Estación 4: Mi perfil</h2>
-    <p>Esta es tu tendencia según tus respuestas. Tú decides el área final.</p>
+    <div class="aviso" style="background:#e8f1ff"><b>¿Qué debo hacer?</b><ol style="margin:6px 0 0 18px;padding:0">
+      <li>Mira la gráfica. La barra más larga es la que más se acerca a tus respuestas.</li>
+      <li>Confirma o cambia tu <b>área de afinidad</b>. Tú decides, la gráfica solo es una pista.</li>
+      <li>Elige <b>hasta 3 sectores</b> para tu carné.</li>
+      <li>Toca <b>Crear mi carné</b>.</li></ol></div>
     <div class="barras" id="barras"></div>
     <label>Mi área de afinidad</label>
     <div class="chips" id="areaFinal"></div>
@@ -268,6 +289,7 @@ const estado = {
 
 /* ---------- Navegación ---------- */
 function irA(id){
+  if(id==="e1") pintarVerbos();
   document.querySelectorAll(".pantalla").forEach(s=>s.classList.remove("activa"));
   document.getElementById(id).classList.add("activa");
   const idx = ORDEN.indexOf(id);
