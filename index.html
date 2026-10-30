@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi Ruta de Talentos · 8B · IED La Luz</title>
+<style>
+:root{--azul:#1d4f91;--amarillo:#f7c531;--verde:#2e9e6a;--naranja:#e8743b;--morado:#7b4fb8;--texto:#1d2633;--gris:#6b7685}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(160deg,#dfeeff,#fff7e0);color:var(--texto);min-height:100vh}
+header{background:var(--azul);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
+header img{height:44px;width:auto;background:#fff;border-radius:50%;padding:2px}
+header h1{font-size:1.05rem;margin:0;line-height:1.2}
+main{max-width:680px;margin:0 auto;padding:16px}
+.pantalla{display:none;animation:entra .4s ease}
+.pantalla.activa{display:block}
+@keyframes entra{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.tarjeta{background:#fff;border-radius:18px;padding:20px;box-shadow:0 6px 18px rgba(29,79,145,.12);margin-bottom:14px}
+h2{margin:.2em 0 .4em;color:var(--azul);font-size:1.3rem}
+p{line-height:1.5}
+.pista{color:var(--gris);font-size:.92rem}
+label{display:block;font-weight:600;margin:12px 0 4px}
+input[type=text],input[type=number],textarea{width:100%;padding:12px;border:2px solid #d5deea;border-radius:12px;font-size:1rem;font-family:inherit}
+input:focus,textarea:focus{outline:none;border-color:var(--azul)}
+textarea{min-height:90px;resize:vertical}
+.btn{background:var(--azul);color:#fff;border:0;border-radius:999px;padding:13px 22px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:14px;transition:transform .15s}
+.btn:hover{transform:scale(1.03)}
+.btn:disabled{background:#aab4c3;cursor:not-allowed;transform:none}
+.btn.sec{background:#fff;color:var(--azul);border:2px solid var(--azul)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:2px solid #cfd9e8;background:#fff;border-radius:14px;padding:10px 14px;cursor:pointer;font-size:.98rem;text-align:left;transition:all .15s;flex:1 1 180px}
+.chip small{display:block;color:var(--gris);font-size:.8rem;margin-top:2px}
+.chip.on{border-color:var(--verde);background:#e8f8f0;box-shadow:0 0 0 3px rgba(46,158,106,.2)}
+.barra{height:12px;background:#dfe7f3;border-radius:999px;overflow:hidden;margin:10px 0 4px}
+.barra div{height:100%;width:0;background:linear-gradient(90deg,var(--verde),var(--amarillo));transition:width .5s}
+.estaciones{display:flex;justify-content:space-between;font-size:.75rem;color:var(--gris)}
+.sector{display:flex;align-items:center;justify-content:space-between;gap:10px;border:2px solid #e2e8f1;border-radius:14px;padding:12px;margin-bottom:10px;background:#fff;transition:transform .2s}
+.sector.si{border-color:var(--verde);background:#e8f8f0}
+.sector.no{opacity:.5}
+.sector b{display:block}
+.tag{font-size:.75rem;padding:3px 9px;border-radius:999px;color:#fff;white-space:nowrap}
+.Técnica{background:var(--naranja)}.Académica{background:var(--azul)}.Artística{background:var(--morado)}
+.sel{display:flex;gap:8px}
+.sel button{border:2px solid #cfd9e8;background:#fff;border-radius:10px;padding:8px 10px;cursor:pointer;font-size:.9rem}
+.sel button.on{background:var(--verde);color:#fff;border-color:var(--verde)}
+.caso{border-left:5px solid var(--amarillo);background:#fffbea;padding:12px;border-radius:12px;margin-bottom:14px}
+.opcion{display:block;padding:10px 12px;border:2px solid #e2e8f1;border-radius:12px;margin:6px 0;cursor:pointer}
+.opcion input{margin-right:8px}
+.opcion.on{border-color:var(--verde);background:#e8f8f0}
+.barras{margin:8px 0}
+.fila{display:flex;align-items:center;gap:10px;margin:8px 0}
+.fila span{width:90px;font-weight:600}
+.fila .b{flex:1;background:#eef2f8;border-radius:999px;height:16px;overflow:hidden}
+.fila .b i{display:block;height:100%;background:var(--azul);width:0;transition:width .8s}
+.aviso{background:#fff3cd;border-radius:12px;padding:10px 12px;font-size:.92rem;margin-top:10px}
+.error{color:#c0392b;font-weight:600;margin-top:8px;min-height:1.2em}
+.carne-wrap{text-align:center}
+#lienzo{width:100%;max-width:600px;height:auto;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.estrella{font-size:3rem;animation:rebote 1.2s infinite}
+@keyframes rebote{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.oculto{display:none}
+</style>
+</head>
+<body>
+
+<header>
+  <img id="logo" src="logo.png" alt="Logo IED La Luz" onerror="this.style.display='none'">
+  <h1>Mi Ruta de Talentos<br><small style="font-weight:400">Proyecto de Vida · 8°B · Sesión 4</small></h1>
+</header>
+
+<main>
+
+<!-- ============ CONSENTIMIENTO ============ -->
+<section id="consentimiento" class="pantalla activa">
+  <div class="tarjeta">
+    <h2>Bienvenido a tu Ruta de Talentos</h2>
+    <p>Hoy vas a recorrer cuatro estaciones para descubrir cómo tus fortalezas pueden convertirse en una especialidad de la media técnica y en una carrera o profesión.</p>
+    <p class="pista">Al final obtendrás un <b>Carné de Proyección Socioocupacional</b> para tu portafolio.</p>
+    <div class="aviso">
+      <label style="display:flex;gap:10px;font-weight:400;cursor:pointer">
+        <input type="checkbox" id="acepto" style="margin-top:4px">
+        <span>Entiendo que mis respuestas serán usadas por mi docente solo con fines pedagógicos del Proyecto de Vida. Mi acudiente autorizó el tratamiento de mis datos personales (Ley 1581 de 2012).</span>
+      </label>
+    </div>
+    <button class="btn" id="btnAcepto" disabled onclick="irA('identidad')">Comenzar la ruta</button>
+  </div>
+</section>
+
+<!-- ============ IDENTIDAD ============ -->
+<section id="identidad" class="pantalla">
+  <div class="tarjeta">
+    <h2>Tu identificación</h2>
+    <p class="pista">Escribe tus datos tal como aparecen en la lista de clase.</p>
+    <label for="nombre">Nombres</label>
+    <input type="text" id="nombre" maxlength="60" autocomplete="off">
+    <label for="apellido">Apellidos</label>
+    <input type="text" id="apellido" maxlength="60" autocomplete="off">
+    <label for="lista">Número de lista (1 a 31)</label>
+    <input type="number" id="lista" min="1" max="31">
+    <p class="error" id="errId"></p>
+    <button class="btn" onclick="validarIdentidad()">Continuar</button>
+  </div>
+</section>
+
+<!-- ============ MAPA DE LA RUTA ============ -->
+<section id="ruta" class="pantalla">
+  <div class="tarjeta">
+    <h2>Tu ruta de hoy</h2>
+    <div class="barra"><div id="progreso"></div></div>
+    <div class="estaciones"><span>Estación 1</span><span>Estación 2</span><span>Estación 3</span><span>Carné</span></div>
+    <p style="margin-top:14px">🧭 <b>Estación 1:</b> Mis evidencias<br>🔀 <b>Estación 2:</b> Cruce de caminos<br>🧩 <b>Estación 3:</b> Caso real<br>🎓 <b>Final:</b> Mi carné</p>
+    <button class="btn" onclick="irA('e1')">Empezar estación 1</button>
+  </div>
+</section>
+
+<!-- ============ ESTACIÓN 1 ============ -->
+<section id="e1" class="pantalla">
+  <div class="tarjeta">
+    <h2>🧭 Estación 1: Mis evidencias</h2>
+    <p>Elige <b>dos verbos</b> que describan cómo trabajas mejor. Piensa en lo que has hecho, no en lo que quisieras hacer.</p>
+    <div class="chips" id="verbos"></div>
+    <p class="pista" id="contVerbos">Selecciona 2 verbos.</p>
+    <label for="evidencia">Escribe un ejemplo real de tus cuadernos (Sesiones 1 a 3)</label>
+    <textarea id="evidencia" maxlength="400" placeholder="Ej: En la sesión de mapeo armé una tabla con mi cinta métrica y un destornillador..."></textarea>
+    <p class="pista">Mínimo 20 caracteres.</p>
+    <p class="error" id="errE1"></p>
+    <button class="btn" onclick="validarE1()">Siguiente estación</button>
+  </div>
+</section>
+
+<!-- ============ ESTACIÓN 2 ============ -->
+<section id="e2" class="pantalla">
+  <div class="tarjeta">
+    <h2>🔀 Estación 2: Cruce de caminos</h2>
+    <p>Marca con <b>Me interesa</b> o <b>No me interesa</b> cada sector. Elige al menos <b>3</b> que te interesen.</p>
+    <div id="sectores"></div>
+    <p class="pista" id="contSectores">Interesados: 0</p>
+    <p class="error" id="errE2"></p>
+    <button class="btn" onclick="validarE2()">Siguiente estación</button>
+  </div>
+</section>
+
+<!-- ============ ESTACIÓN 3 ============ -->
+<section id="e3" class="pantalla">
+  <div class="tarjeta">
+    <h2>🧩 Estación 3: Caso real</h2>
+    <p>Para cada situación del salón, elige la estrategia con la que tú la resolverías.</p>
+    <div id="casos"></div>
+    <p class="error" id="errE3"></p>
+    <button class="btn" onclick="validarE3()">Ver mi resultado</button>
+  </div>
+</section>
+
+<!-- ============ ESTACIÓN 4 ============ -->
+<section id="e4" class="pantalla">
+  <div class="tarjeta">
+    <h2>🎓 Estación 4: Mi perfil</h2>
+    <p>Esta es tu tendencia según tus respuestas. Tú decides el área final.</p>
+    <div class="barras" id="barras"></div>
+    <label>Mi área de afinidad</label>
+    <div class="chips" id="areaFinal"></div>
+    <label>Sectores donde me imagino (máximo 3)</label>
+    <div id="sectoresFinal"></div>
+    <p class="error" id="errE4"></p>
+    <button class="btn" onclick="generarCarne()">Crear mi carné</button>
+  </div>
+</section>
+
+<!-- ============ CARNÉ ============ -->
+<section id="carne" class="pantalla">
+  <div class="tarjeta carne-wrap">
+    <div class="estrella">⭐</div>
+    <h2>¡Tu carné está listo!</h2>
+    <canvas id="lienzo" width="900" height="540"></canvas>
+    <p class="pista" id="estadoEnvio"></p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a class="btn" id="btnDescargar" download="carne_talentos_8B.png">Descargar mi carné</a>
+      <button class="btn sec" onclick="window.print()">Imprimir</button>
+    </div>
+    <p class="pista" style="margin-top:16px">Guarda o imprime tu carné. En la Sesión 5 lo incluirás en tu portafolio y escribirás a mano tu declaración final.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* =========================================================
+   CONFIGURACIÓN DEL DOCENTE
+   1) Reemplaza FORM_ACTION con la URL del Google Form
+      (cambia "viewform" por "formResponse" en el enlace).
+   2) Reemplaza cada entry.XXXX por los IDs del formulario.
+   ========================================================= */
+const CONFIG = {
+  FORM_ACTION: "https://docs.google.com/forms/d/e/1FAIpQLSdgIeTRL-O56RWYHOemnSP6fX3XXEQeP_G3PBNakSiGXJB6XQ/formResponse",
+  ENTRY: {
+    nombre:       "entry.689385769",
+    apellido:     "entry.1788889527",
+    lista:        "entry.255728324",
+    fortaleza1:   "entry.1934534479",
+    fortaleza2:   "entry.141077987",
+    evidencia:    "entry.760931304",
+    areaSugerida: "entry.778532371",
+    areaFinal:    "entry.572546922",
+    sectores:     "entry.1387808935",
+    casos:        "entry.975669358"
+  },
+  GRADO: "8°B",
+  INSTITUCION: "IED La Luz · Barranquilla"
+};
+
+/* ---------- Datos de la actividad ---------- */
+const VERBOS = [
+  {n:"Construir", a:"Técnica",   d:"Armar, montar o fabricar"},
+  {n:"Reparar",   a:"Técnica",   d:"Diagnosticar y arreglar"},
+  {n:"Diseñar",   a:"Artística", d:"Crear formas, imágenes o espacios"},
+  {n:"Calcular",  a:"Académica", d:"Medir, modelar y resolver con números"},
+  {n:"Organizar", a:"Académica", d:"Ordenar información y planear"},
+  {n:"Expresar",  a:"Artística", d:"Comunicar con voz, cuerpo o imagen"}
+];
+
+const SECTORES = [
+  {n:"Electricidad y electrónica", a:"Técnica"},
+  {n:"Logística y transporte (SENA)", a:"Técnica"},
+  {n:"Sistemas y programación", a:"Académica"},
+  {n:"Diseño gráfico y audiovisual", a:"Artística"},
+  {n:"Enfermería y salud", a:"Académica"},
+  {n:"Mecánica y mantenimiento", a:"Técnica"},
+  {n:"Artes escénicas y música", a:"Artística"},
+  {n:"Contabilidad y finanzas", a:"Académica"},
+  {n:"Gastronomía", a:"Técnica"},
+  {n:"Arquitectura e ingeniería", a:"Académica"},
+  {n:"Moda y artes plásticas", a:"Artística"},
+  {n:"Turismo y servicio al cliente", a:"Técnica"}
+];
+
+const CASOS = [
+  {titulo:"Caso 1 · Técnico/Mecánico",
+   texto:"La bisagra de la puerta del salón está suelta y el brazo hidráulico gotea aceite.",
+   opciones:[
+     {t:"Ajustar la bisagra con herramientas y limpiar la fuga", a:"Técnica"},
+     {t:"Medir el problema, calcular el costo y pedir el repuesto correcto", a:"Académica"},
+     {t:"Improvisar una solución provisional con material disponible", a:"Artística"}]},
+  {titulo:"Caso 2 · Lógico/Digital",
+   texto:"Hay que organizar y graficar las notas de 150 estudiantes que están desordenadas.",
+   opciones:[
+     {t:"Usar una hoja de cálculo para ordenar y graficar", a:"Técnica"},
+     {t:"Crear categorías, calcular promedios y analizar tendencias", a:"Académica"},
+     {t:"Presentar los resultados con un diseño visual claro y atractivo", a:"Artística"}]},
+  {titulo:"Caso 3 · Artístico/Espacial",
+   texto:"Hay que diseñar la escenografía de una obra escolar solo con material reciclado del patio.",
+   opciones:[
+     {t:"Armar la estructura con cartón y cinta, paso a paso", a:"Técnica"},
+     {t:"Planear medidas y proporciones antes de construir", a:"Académica"},
+     {t:"Crear la idea visual, los colores y el ambiente de la escena", a:"Artística"}]}
+];
+
+const AREAS = ["Académica","Técnica","Artística"];
+const ORDEN = ["consentimiento","identidad","ruta","e1","e2","e3","e4","carne"];
+const PESO_VERBO = 2, PESO_SECTOR = 1, PESO_CASO = 2;
+
+const estado = {
+  nombre:"", apellido:"", lista:"",
+  verbos:[], evidencia:"",
+  interes:new Set(),
+  casos:[null,null,null],
+  areaFinal:"", sectoresFinal:[]
+};
+
+/* ---------- Navegación ---------- */
+function irA(id){
+  document.querySelectorAll(".pantalla").forEach(s=>s.classList.remove("activa"));
+  document.getElementById(id).classList.add("activa");
+  const idx = ORDEN.indexOf(id);
+  document.getElementById("progreso").style.width = Math.max(0, (idx/(ORDEN.length-1))*100) + "%";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ---------- Consentimiento ---------- */
+document.getElementById("acepto").addEventListener("change", e=>{
+  document.getElementById("btnAcepto").disabled = !e.target.checked;
+});
+
+/* ---------- Identidad ---------- */
+function validarIdentidad(){
+  const n = document.getElementById("nombre").value.trim();
+  const a = document.getElementById("apellido").value.trim();
+  const l = parseInt(document.getElementById("lista").value,10);
+  const err = document.getElementById("errId");
+  if(!n || !a){ err.textContent="Escribe tu nombre y apellidos."; return; }
+  if(!(l>=1 && l<=31)){ err.textContent="El número de lista debe estar entre 1 y 31."; return; }
+  err.textContent="";
+  Object.assign(estado,{nombre:n,apellido:a,lista:String(l)});
+  irA("ruta");
+}
+
+/* ---------- Estación 1: verbos ---------- */
+function pintarVerbos(){
+  const cont = document.getElementById("verbos");
+  cont.innerHTML = "";
+  VERBOS.forEach(v=>{
+    const b = document.createElement("button");
+    b.className = "chip" + (estado.verbos.includes(v.n)?" on":"");
+    b.innerHTML = `<b>${v.n}</b><small>${v.d}</small>`;
+    b.onclick = ()=>{
+      if(estado.verbos.includes(v.n)){
+        estado.verbos = estado.verbos.filter(x=>x!==v.n);
+      } else if(estado.verbos.length < 2){
+        estado.verbos.push(v.n);
+      } else {
+        document.getElementById("contVerbos").textContent = "Ya elegiste 2. Quita uno para cambiarlo.";
+        return;
+      }
+      pintarVerbos();
+    };
+    cont.appendChild(b);
+  });
+  document.getElementById("contVerbos").textContent =
+    `Elegidos: ${estado.verbos.length} de 2`;
+}
+
+function validarE1(){
+  const ev = document.getElementById("evidencia").value.trim();
+  const err = document.getElementById("errE1");
+  if(estado.verbos.length !== 2){ err.textContent="Elige exactamente 2 verbos."; return; }
+  if(ev.length < 20){ err.textContent="Escribe un ejemplo real con al menos 20 caracteres."; return; }
+  err.textContent="";
+  estado.evidencia = ev;
+  pintarSectores();
+  irA("e2");
+}
+
+/* ---------- Estación 2: sectores ---------- */
+function pintarSectores(){
+  const cont = document.getElementById("sectores");
+  cont.innerHTML = "";
+  SECTORES.forEach((s,i)=>{
+    const d = document.createElement("div");
+    const estadoSector = estado.interes.has(i) ? "si" : (estado.interes.has(-i-1) ? "no" : "");
+    d.className = "sector " + estadoSector;
+    d.innerHTML = `
+      <div><b>${s.n}</b><span class="tag ${s.a}">${s.a}</span></div>
+      <div class="sel">
+        <button class="${estadoSector==='si'?'on':''}" data-k="si">Me interesa</button>
+        <button class="${estadoSector==='no'?'on':''}" data-k="no">No</button>
+      </div>`;
+    d.querySelectorAll("button").forEach(b=>{
+      b.onclick = ()=>{
+        estado.interes.delete(i); estado.interes.delete(-i-1);
+        if(b.dataset.k==="si") estado.interes.add(i); else estado.interes.add(-i-1);
+        pintarSectores();
+      };
+    });
+    cont.appendChild(d);
+  });
+  const si = [...estado.interes].filter(x=>x>=0).length;
+  document.getElementById("contSectores").textContent = `Interesados: ${si} (mínimo 3)`;
+}
+
+function validarE2(){
+  const si = [...estado.interes].filter(x=>x>=0).length;
+  const err = document.getElementById("errE2");
+  if(si < 3){ err.textContent="Marca al menos 3 sectores como «Me interesa»."; return; }
+  err.textContent="";
+  pintarCasos();
+  irA("e3");
+}
+
+/* ---------- Estación 3: casos ---------- */
+function pintarCasos(){
+  const cont = document.getElementById("casos");
+  cont.innerHTML = "";
+  CASOS.forEach((c,ci)=>{
+    const div = document.createElement("div");
+    div.className = "caso";
+    let html = `<b>${c.titulo}</b><p>${c.texto}</p>`;
+    c.opciones.forEach((o,oi)=>{
+      const on = estado.casos[ci]===oi ? " on" : "";
+      html += `<label class="opcion${on}"><input type="radio" name="caso${ci}" ${estado.casos[ci]===oi?"checked":""}> ${o.t}</label>`;
+    });
+    div.innerHTML = html;
+    div.querySelectorAll("input").forEach((inp,oi)=>{
+      inp.onchange = ()=>{ estado.casos[ci]=oi; pintarCasos(); };
+    });
+    cont.appendChild(div);
+  });
+}
+
+function validarE3(){
+  const err = document.getElementById("errE3");
+  if(estado.casos.includes(null)){ err.textContent="Responde los tres casos."; return; }
+  err.textContent="";
+  calcularYMostrar();
+  irA("e4");
+}
+
+/* ---------- Estación 4: puntajes ---------- */
+function puntajes(){
+  const p = {Académica:0, Técnica:0, Artística:0};
+  VERBOS.forEach(v=>{ if(estado.verbos.includes(v.n)) p[v.a]+=PESO_VERBO; });
+  SECTORES.forEach((s,i)=>{ if(estado.interes.has(i)) p[s.a]+=PESO_SECTOR; });
+  CASOS.forEach((c,ci)=>{ p[c.opciones[estado.casos[ci]].a]+=PESO_CASO; });
+  return p;
+}
+
+function sugerida(p){
+  return AREAS.slice().sort((a,b)=>p[b]-p[a])[0];
+}
+
+function calcularYMostrar(){
+  const p = puntajes();
+  const max = Math.max(...Object.values(p),1);
+  const barras = document.getElementById("barras");
+  barras.innerHTML = "<p class='pista'>Tu tendencia según tus respuestas:</p>" +
+    AREAS.map(a=>`
+      <div class="fila"><span>${a}</span>
+        <div class="b"><i data-w="${Math.round(p[a]/max*100)}"></i></div>
+        <b>${p[a]}</b></div>`).join("");
+  setTimeout(()=>barras.querySelectorAll("i").forEach(i=>i.style.width=i.dataset.w+"%"),100);
+
+  const sug = sugerida(p);
+  estado.areaFinal = sug;
+  pintarAreaFinal(sug);
+
+  const sectoresInteres = SECTORES.map((s,i)=>i).filter(i=>estado.interes.has(i));
+  estado.sectoresFinal = sectoresInteres.slice(0,3);
+  pintarSectoresFinal(sectoresInteres);
+}
+
+function pintarAreaFinal(sug){
+  const cont = document.getElementById("areaFinal");
+  cont.innerHTML = AREAS.map(a=>
+    `<button class="chip${a===estado.areaFinal?' on':''}" data-a="${a}"><b>${a}</b>${a===sug?'<small>Sugerida</small>':''}</button>`
+  ).join("");
+  cont.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    estado.areaFinal=b.dataset.a; pintarAreaFinal(sug);
+  });
+}
+
+function pintarSectoresFinal(lista){
+  const cont = document.getElementById("sectoresFinal");
+  cont.innerHTML = lista.map(i=>{
+    const on = estado.sectoresFinal.includes(i) ? " on" : "";
+    return `<button class="chip${on}" data-i="${i}" style="flex:none;margin:4px">${SECTORES[i].n}</button>`;
+  }).join("");
+  cont.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    const i = +b.dataset.i;
+    if(estado.sectoresFinal.includes(i)){
+      estado.sectoresFinal = estado.sectoresFinal.filter(x=>x!==i);
+    } else if(estado.sectoresFinal.length < 3){
+      estado.sectoresFinal.push(i);
+    } else {
+      document.getElementById("errE4").textContent="Solo puedes elegir 3 sectores para el carné.";
+      return;
+    }
+    document.getElementById("errE4").textContent="";
+    pintarSectoresFinal(lista);
+  });
+}
+
+/* ---------- Carné (canvas) ---------- */
+function cargarLogo(){
+  return new Promise(res=>{
+    const img = new Image();
+    img.onload = ()=>res(img);
+    img.onerror = ()=>res(null);
+    img.src = "logo.png";
+  });
+}
+
+function textoAjustado(ctx,texto,x,y,maxW,lh){
+  const palabras = texto.split(" ");
+  let linea = "";
+  for(const w of palabras){
+    const prueba = linea + w + " ";
+    if(ctx.measureText(prueba).width > maxW && linea){
+      ctx.fillText(linea.trim(),x,y); linea = w + " "; y += lh;
+    } else linea = prueba;
+  }
+  ctx.fillText(linea.trim(),x,y);
+  return y;
+}
+
+async function generarCarne(){
+  const err = document.getElementById("errE4");
+  if(!estado.areaFinal){ err.textContent="Elige tu área de afinidad."; return; }
+  if(estado.sectoresFinal.length < 1){ err.textContent="Elige al menos un sector."; return; }
+  err.textContent="";
+
+  const c = document.getElementById("lienzo");
+  const x = c.getContext("2d");
+  const logo = await cargarLogo();
+
+  const colores = {Académica:"#1d4f91",Técnica:"#e8743b",Artística:"#7b4fb8"};
+  const color = colores[estado.areaFinal];
+
+  x.fillStyle = "#fffdf5"; x.fillRect(0,0,900,540);
+  x.fillStyle = color; x.fillRect(0,0,900,120);
+  x.fillStyle = "#f7c531"; x.fillRect(0,120,900,8);
+
+  if(logo){ x.drawImage(logo,30,22,76,76); }
+
+  x.fillStyle="#fff"; x.font="bold 34px system-ui, Arial";
+  x.fillText("Carné de Proyección Socioocupacional",logo?125:40,58);
+  x.font="20px system-ui, Arial";
+  x.fillText(`${CONFIG.INSTITUCION} · Grado ${CONFIG.GRADO}`,logo?125:40,92);
+
+  x.fillStyle="#1d2633"; x.font="bold 40px system-ui, Arial";
+  x.fillText(`${estado.nombre} ${estado.apellido}`,40,195);
+  x.font="22px system-ui, Arial"; x.fillStyle="#6b7685";
+  x.fillText(`Número de lista: ${estado.lista}`,40,230);
+
+  x.fillStyle=color; x.font="bold 26px system-ui, Arial";
+  x.fillText(`Área de afinidad: ${estado.areaFinal}`,40,285);
+
+  x.fillStyle="#1d2633"; x.font="bold 22px system-ui, Arial";
+  x.fillText("Mis fortalezas:",40,330);
+  x.font="22px system-ui, Arial";
+  x.fillText(estado.verbos.join("  ·  "),40,362);
+
+  x.font="bold 22px system-ui, Arial";
+  x.fillText("Sectores donde me imagino:",40,410);
+  x.font="20px system-ui, Arial";
+  const sectoresTxt = estado.sectoresFinal.map(i=>SECTORES[i].n).join("  ·  ");
+  textoAjustado(x,sectoresTxt,40,442,820,28);
+
+  x.fillStyle="#6b7685"; x.font="italic 18px system-ui, Arial";
+  x.fillText("Este carné se completa en la Sesión 5 con mi declaración final escrita a mano.",40,512);
+
+  const url = c.toDataURL("image/png");
+  const btn = document.getElementById("btnDescargar");
+  btn.href = url;
+  btn.download = `carne_${estado.nombre}_${estado.apellido}_lista${estado.lista}.png`.replace(/\s+/g,"_");
+
+  irA("carne");
+  enviarRespuestas();
+}
+
+/* ---------- Envío a Google Forms ---------- */
+function enviarRespuestas(){
+  const est = document.getElementById("estadoEnvio");
+  if(CONFIG.FORM_ACTION.includes("REEMPLAZAR")){
+    est.textContent = "Tu carné está listo. (Modo de prueba: los datos aún no se envían al docente.)";
+    return;
+  }
+  const datos = new URLSearchParams();
+  const ENT = CONFIG.ENTRY;
+  datos.append(ENT.nombre, estado.nombre);
+  datos.append(ENT.apellido, estado.apellido);
+  datos.append(ENT.lista, estado.lista);
+  datos.append(ENT.fortaleza1, estado.verbos[0]);
+  datos.append(ENT.fortaleza2, estado.verbos[1]);
+  datos.append(ENT.evidencia, estado.evidencia);
+  datos.append(ENT.areaSugerida, sugerida(puntajes()));
+  datos.append(ENT.areaFinal, estado.areaFinal);
+  datos.append(ENT.sectores, estado.sectoresFinal.map(i=>SECTORES[i].n).join(" | "));
+  datos.append(ENT.casos, estado.casos.map((oi,ci)=>
+    `C${ci+1}:${CASOS[ci].opciones[oi].a}`).join(" | "));
+
+  fetch(CONFIG.FORM_ACTION,{method:"POST",mode:"no-cors",body:datos})
+    .then(()=>est.textContent="✅ Tus resultados fueron enviados a tu docente.")
+    .catch(()=>est.textContent="No se pudo enviar. Descarga tu carné y avisa a tu docente.");
+}
+</script>
+</body>
+</html>
