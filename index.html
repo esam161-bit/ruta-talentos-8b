@@ -161,7 +161,7 @@ textarea{min-height:90px;resize:vertical}
     <div class="aviso" style="background:#e8f1ff"><b>¿Qué debo hacer?</b><ol style="margin:6px 0 0 18px;padding:0">
       <li>Lee cada caso.</li>
       <li>En cada caso, toca <b>una sola opción</b>: la forma en que <b>tú</b> lo resolverías.</li>
-      <li>Responde los tres casos y toca <b>Ver mi resultado</b>.</li></ol></div>
+      <li>Responde los cinco casos y toca <b>Ver mi resultado</b>.</li></ol></div>
     <div id="casos"></div>
     <p class="error" id="errE3"></p>
     <button class="btn" onclick="validarE3()">Ver mi resultado</button>
@@ -255,24 +255,36 @@ const SECTORES = [
 ];
 
 const CASOS = [
-  {titulo:"Caso 1 · Técnico/Mecánico",
-   texto:"La bisagra de la puerta del salón está suelta y el brazo hidráulico gotea aceite.",
+  {titulo:"Caso 1 · La puerta que se atasca",
+   texto:"En tu salón, la bisagra de una puerta está floja y la puerta no cierra bien. Nadie sabe arreglarla.",
    opciones:[
-     {t:"Ajustar la bisagra con herramientas y limpiar la fuga", a:"Técnica"},
-     {t:"Medir el problema, calcular el costo y pedir el repuesto correcto", a:"Académica"},
-     {t:"Improvisar una solución provisional con material disponible", a:"Artística"}]},
-  {titulo:"Caso 2 · Lógico/Digital",
-   texto:"Hay que organizar y graficar las notas de 150 estudiantes que están desordenadas.",
+     {t:"Ajusto los tornillos con un destornillador o pido ayuda para arreglarla", a:"Técnica"},
+     {t:"Reviso qué pieza está dañada y cuánto costaría el repuesto antes de hacer algo", a:"Académica"},
+     {t:"Hago un aviso llamativo para que todos sepan cómo usar la puerta mientras se arregla", a:"Artística"}]},
+  {titulo:"Caso 2 · Las notas desordenadas",
+   texto:"El profesor tiene las notas de 150 estudiantes escritas en desorden, en varias hojas.",
    opciones:[
-     {t:"Usar una hoja de cálculo para ordenar y graficar", a:"Técnica"},
-     {t:"Crear categorías, calcular promedios y analizar tendencias", a:"Académica"},
-     {t:"Presentar los resultados con un diseño visual claro y atractivo", a:"Artística"}]},
-  {titulo:"Caso 3 · Artístico/Espacial",
-   texto:"Hay que diseñar la escenografía de una obra escolar solo con material reciclado del patio.",
+     {t:"Paso los datos a una hoja de Excel y los ordeno", a:"Técnica"},
+     {t:"Calculo promedios por grupo y veo en qué materia la mayoría va más bajo", a:"Académica"},
+     {t:"Hago un gráfico con colores que muestre los resultados de forma clara", a:"Artística"}]},
+  {titulo:"Caso 3 · La obra de teatro sin presupuesto",
+   texto:"El colegio hará una obra de teatro, pero no hay dinero. Solo tienen cartón, botellas y tapas del patio.",
    opciones:[
-     {t:"Armar la estructura con cartón y cinta, paso a paso", a:"Técnica"},
-     {t:"Planear medidas y proporciones antes de construir", a:"Académica"},
-     {t:"Crear la idea visual, los colores y el ambiente de la escena", a:"Artística"}]}
+     {t:"Armo la estructura del escenario con cartón y cinta", a:"Técnica"},
+     {t:"Mido el espacio del escenario y dibujo un plano antes de empezar", a:"Académica"},
+     {t:"Pinto el fondo y escojo los colores que den el ambiente de la historia", a:"Artística"}]},
+  {titulo:"Caso 4 · El compañero que no entiende",
+   texto:"Un compañero no entendió un tema de Ciencias. Tienes 3 minutos para explicárselo al salón.",
+   opciones:[
+     {t:"Hago un experimento sencillo con materiales que tengo a la mano", a:"Técnica"},
+     {t:"Hago un resumen con pasos, números y un ejemplo", a:"Académica"},
+     {t:"Cuento una historia o hago dibujos para que la idea sea fácil de recordar", a:"Artística"}]},
+  {titulo:"Caso 5 · La feria del salón",
+   texto:"El salón quiere hacer una feria con juegos y comidas para ganar dinero para el paseo, pero tiene muy poco presupuesto.",
+   opciones:[
+     {t:"Armo los puestos y me encargo de montar las mesas", a:"Técnica"},
+     {t:"Calculo cuánto cuesta cada cosa y cuánto dinero puede sobrar", a:"Académica"},
+     {t:"Diseño la decoración y los carteles del evento", a:"Artística"}]}
 ];
 
 const AREAS = ["Académica","Técnica","Artística"];
@@ -283,7 +295,7 @@ const estado = {
   nombre:"", apellido:"", lista:"",
   verbos:[], evidencia:"",
   interes:new Set(),
-  casos:[null,null,null],
+  casos:CASOS.map(()=>null),
   areaFinal:"", sectoresFinal:[]
 };
 
@@ -409,7 +421,7 @@ function pintarCasos(){
 
 function validarE3(){
   const err = document.getElementById("errE3");
-  if(estado.casos.includes(null)){ err.textContent="Responde los tres casos."; return; }
+  if(estado.casos.includes(null)){ err.textContent="Responde todos los casos antes de continuar."; return; }
   err.textContent="";
   calcularYMostrar();
   irA("e4");
